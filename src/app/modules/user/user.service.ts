@@ -36,12 +36,12 @@ const createDoctor = async (req: Request) => {
 
     const hashedPassword = await bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUNDS as string))
 
+    const userData = {
+        email: req.body.doctor.email,
+        password: hashedPassword,
+        role: UserRole.DOCTOR
+    }
     const result = await prisma.$transaction(async (tnx) => {
-        const userData = {
-            email: req.body.doctor.email,
-            password: hashedPassword,
-            role: UserRole.DOCTOR
-        }
 
         await tnx.user.create({
             data: userData
@@ -54,6 +54,37 @@ const createDoctor = async (req: Request) => {
         return createDoctorData
     })
 
+    return result
+}
+
+
+
+
+
+const createAdmin = async (req: Request) => {
+    if (req.file) {
+        const uploadResult = await FileUploader.uploadToCloudinary(req.file)
+        req.body.admin.profilePhoto = uploadResult?.secure_url
+    }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUNDS as string))
+
+
+    const adminData = {
+        email: req.body.admin.email,
+        password: hashedPassword,
+        role: UserRole.ADMIN
+    }
+    const result = await prisma.$transaction(async (tnx) => {
+        await tnx.user.create({
+            data: adminData
+        })
+
+        const admin = tnx.user.create({
+            data: req.body.admin
+        })
+        return admin
+    })
     return result
 }
 
