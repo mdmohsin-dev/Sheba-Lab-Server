@@ -2,9 +2,9 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../../../../lib/prisma";
 import type { Request } from "express";
 import { FileUploader } from "../../helper/FileUploader";
+import { UserRole } from "../../../../generated/prisma/enums";
 
 const createPatient = async (req: Request) => {
-
     if (req.file) {
         const uploadResult = await FileUploader.uploadToCloudinary(req.file)
         req.body.patient.profilePhoto = uploadResult?.secure_url
@@ -27,6 +27,38 @@ const createPatient = async (req: Request) => {
 }
 
 
+
+const createDoctor = async (req: Request) => {
+    if (req.file) {
+        const uploadResult = await FileUploader.uploadToCloudinary(req.file)
+        req.body.doctor.profilePhoto = uploadResult?.secure_url
+    }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUNDS as string))
+
+    const result = await prisma.$transaction(async (tnx) => {
+        const userData = {
+            email: req.body.doctor.email,
+            password: hashedPassword,
+            role: UserRole.DOCTOR
+        }
+
+        await tnx.user.create({
+            data: userData
+        })
+
+        const createDoctorData = await tnx.doctor.create({
+            data: req.body.doctor
+        })
+
+        return createDoctorData
+    })
+
+    return result
+}
+
+
 export const UserService = {
-    createPatient
+    createPatient,
+    createDoctor
 }

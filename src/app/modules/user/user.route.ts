@@ -2,6 +2,8 @@ import express, { Router, type NextFunction, type Request, type Response } from 
 import { UserController } from './user.controller';
 import { FileUploader } from '../../helper/FileUploader';
 import { userValidation } from './user.validation';
+import auth from '../../middlewares/auth';
+import { UserRole } from '../../../../generated/prisma/enums';
 
 const router: Router = express.Router()
 
@@ -12,5 +14,13 @@ router.post('/create-patient',
         return UserController.createPatient(req, res, next)
     }
 )
+
+
+router.post('/create-doctor',auth(UserRole.ADMIN),FileUploader.upload.single('file'),
+    (req: Request, res: Response, next: NextFunction) => {
+        console.log(JSON.parse(req.body.data))
+        req.body = userValidation.createDoctorValidationSchema.parse(JSON.parse(req.body.data))
+        return UserController.createDoctor(req, res, next)
+    })
 
 export const UserRoutes = router
