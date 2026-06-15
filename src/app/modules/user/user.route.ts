@@ -7,6 +7,12 @@ import { UserRole } from '../../../../generated/prisma/enums';
 
 const router: Router = express.Router()
 
+
+router.get('/',
+    // auth(UserRole.ADMIN),
+     UserController.getAllFromDB)
+
+
 router.post('/create-patient',
     FileUploader.upload.single('file'),
     (req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +22,9 @@ router.post('/create-patient',
 )
 
 
-router.post('/create-doctor', auth(UserRole.ADMIN), FileUploader.upload.single('file'),
+router.post('/create-doctor', 
+    auth(UserRole.ADMIN), 
+    FileUploader.upload.single('file'),
     (req: Request, res: Response, next: NextFunction) => {
         console.log(JSON.parse(req.body.data))
         req.body = userValidation.createDoctorValidationSchema.parse(JSON.parse(req.body.data))
@@ -25,7 +33,9 @@ router.post('/create-doctor', auth(UserRole.ADMIN), FileUploader.upload.single('
 
 
 
-router.post('/create-admin', auth(UserRole.ADMIN), FileUploader.upload.single('file'),
+router.post('/create-admin', 
+    // auth(UserRole.ADMIN),
+    auth(UserRole.ADMIN), FileUploader.upload.single('file'),
     (req: Request, res: Response, next: NextFunction) => {
         req.body = userValidation.createAdminValidationSchema.parse(JSON.parse(req.body.data))
         return UserController.createAdmin(req, res, next)

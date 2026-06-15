@@ -29,22 +29,24 @@ model Admin {
 }
 
 model Doctor {
-    id                  String   @id @default(uuid())
+    id                  String            @id @default(uuid())
     name                String
-    email               String   @unique
+    email               String            @unique
     profilePhoto        String?
     contactNumber       String?
     address             String?
     registrationNumber  String
-    experience          Int      @default(0)
+    experience          Int               @default(0)
     gender              Gender
     appointmentFee      Int
     qualification       String
     currentWorkingPlace String
-    isdeleted           Boolean  @default(false)
-    createdAt           DateTime @default(now())
-    updatedAt           DateTime @updatedAt
-    user                User     @relation(fields: [email], references: [email])
+    isdeleted           Boolean           @default(false)
+    createdAt           DateTime          @default(now())
+    updatedAt           DateTime          @updatedAt
+    user                User              @relation(fields: [email], references: [email])
+    doctorSchedule      DoctorSchedules[]
+    doctorSpecialties DoctorSpecialties[]
 
     @@map("doctors")
 }

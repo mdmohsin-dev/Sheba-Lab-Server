@@ -11,5 +11,7 @@ export default {
         api_secret:process.env.CLOUDINARY_API_SECRET as string,
         cloude_name:process.env.CLOUDINARY_CLOUD_NAME as string,
         api_key:process.env.CLOUDINARY_API_KEY as string
-    }
+    },
+    jwt_access_secret:process.env.JWT_ACCESS_SECRET as string,
+    jwt_refresh_secret:process.env.JWT_REFRESH_SECRET as string
 }

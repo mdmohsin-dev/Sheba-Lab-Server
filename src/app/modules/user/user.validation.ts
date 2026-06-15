@@ -24,7 +24,7 @@ const createDoctorValidationSchema = z.object({
         gender: z.enum([Gender.MALE, Gender.FEMALE]),
         appointmentFee: z.number({ error: "Appointment fee is required" }),
         qualification: z.string({ error: "Qualification is required" }),
-        currentWorkPlace: z.string({ error: "Current workplace is required" }),
+        currentWorkingPlace: z.string({ error: "Current workplace is required" }),
     })
 })
 

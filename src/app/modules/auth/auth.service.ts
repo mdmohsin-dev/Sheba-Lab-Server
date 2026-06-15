@@ -1,8 +1,10 @@
 import bcrypt from "bcryptjs";
 import { UserStatus } from "../../../../generated/prisma/enums";
 import { prisma } from "../../../../lib/prisma";
-import jwt from "jsonwebtoken";
 import { JwtHelper } from "../../helper/jwtHelper";
+import config from "../../../config";
+import APIError from "../../errors/APIError";
+import httpStatus from "http-status"
 
 const login = async (payload: { email: string; password: string }) => {
     const user = await prisma.user.findUniqueOrThrow({
@@ -14,12 +16,12 @@ const login = async (payload: { email: string; password: string }) => {
 
     const isPasswwordMatched = await bcrypt.compare(payload.password, user.password!)
     if (!isPasswwordMatched) {
-        throw new Error("Invalid credentials")
+        throw new APIError(httpStatus.BAD_REQUEST,"Invalid credentials")
     }
 
-    const accessToken = JwtHelper.generateToken({ email: user.email, role: user.role }, "abcdabcd", "1h")
+    const accessToken = JwtHelper.generateToken({ email: user.email, role: user.role }, config.jwt_access_secret, "1h")
 
-    const refreshToken = JwtHelper.generateToken({ email: user.email, role: user.role }, "abcdabcd", "90d")
+    const refreshToken = JwtHelper.generateToken({ email: user.email, role: user.role }, config.jwt_refresh_secret, "90d")
 
     return {
         accessToken,
