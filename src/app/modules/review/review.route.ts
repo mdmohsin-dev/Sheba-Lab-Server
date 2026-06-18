@@ -1,0 +1,15 @@
+import express, { Router } from 'express'
+import { ReviewController } from './review.controller';
+import auth from '../../middlewares/auth';
+import { UserRole } from '../../../../generated/prisma/enums';
+
+const router:Router = express.Router();
+
+router.post(
+    '/',
+    auth(UserRole.PATIENT),
+    ReviewController.insertIntoDB
+);
+
+
+export const ReviewRoutes = router;
