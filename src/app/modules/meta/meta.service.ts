@@ -1,8 +1,9 @@
-import { UserRole } from "../../../../generated/prisma/enums";
+import { PaymentStatus, UserRole } from "../../../../generated/prisma/enums";
 import { prisma } from "../../../../lib/prisma";
 import APIError from "../../errors/APIError";
 import type { IJWTPayload } from "../../types/common";
 import httpStatus from 'http-status'
+
 
 const fetchDashboardMetaData = async (user: IJWTPayload) => {
     let metadata;
@@ -11,10 +12,10 @@ const fetchDashboardMetaData = async (user: IJWTPayload) => {
             metadata = await getAdminMetaData();
             break;
         case UserRole.DOCTOR:
-            metadata = await 'DoctorMetaData';
+            metadata = await getDoctorMetaData(user);
             break;
         case UserRole.PATIENT:
-            metadata = await 'PatientMetaData';
+            metadata = await getPatientMetaData(user);
             break;
         default:
             throw new APIError(httpStatus.BAD_REQUEST, "Invalid user role!")
@@ -22,7 +23,6 @@ const fetchDashboardMetaData = async (user: IJWTPayload) => {
 
     return metadata;
 };
-
 
 
 const getDoctorMetaData = async (user: IJWTPayload) => {
@@ -135,12 +135,12 @@ const getPatientMetaData = async (user: IJWTPayload) => {
 
 
 
-const getAdminMetaData = async()=>{
+const getAdminMetaData = async () => {
     const patientCount = await prisma.patient.count()
     const doctorCount = await prisma.doctor.count();
     const adminCount = await prisma.admin.count();
-    // const appointmentCount = await prisma.appointment.count() => InshaAllah eita create korte hobve
-    // const paymentCount = await prisma.payment.count() => InshaAllah eita create korte hobve
+    const appointmentCount = await prisma.appointment.count()
+    const paymentCount = await prisma.payment.count()
 
     const totalRevenue = await prisma.payment.aggregate({
         _sum: {
@@ -176,7 +176,6 @@ const getBarChartData = async () => {
         GROUP BY month
         ORDER BY month ASC
     `
-
     return appointmentCountPerMonth
 }
 
