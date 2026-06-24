@@ -103,7 +103,7 @@ const updateIntoDB = async (id: string, payload: Partial<IDoctorUpdateInput>) =>
     return await prisma.$transaction(async (tnx) => {
         if (specialties && specialties.length > 0) {
 
-            const deleteSpecialtyIds = specialties.filter((specialty) => specialty.isDeleted);
+            const deleteSpecialtyIds = specialties.filter((specialty) => specialty.isdeleted);
             for (const specialty of deleteSpecialtyIds) {
                 await tnx.doctorSpecialties.deleteMany({
                     where: {
@@ -114,7 +114,7 @@ const updateIntoDB = async (id: string, payload: Partial<IDoctorUpdateInput>) =>
             }
 
 
-            const createSpecialtyIds = specialties.filter((specialty) => !specialty.isDeleted);
+            const createSpecialtyIds = specialties.filter((specialty) => !specialty.isdeleted);
             for (const specialty of createSpecialtyIds) {
                 await tnx.doctorSpecialties.create({
                     data: {

@@ -73,7 +73,7 @@ const getByIdFromDB = async (id: string): Promise<Patient | null> => {
     const result = await prisma.patient.findUnique({
         where: {
             id,
-            isDeleted: false,
+            isdeleted: false,
         },
     });
     return result;
@@ -110,7 +110,7 @@ const updateIntoDB = async (user: IJWTPayload, payload: any) => {
     const patientInfo = await prisma.patient.findUniqueOrThrow({
         where: {
             email: user.email,
-            isDeleted: false
+            isdeleted: false
         }
     });
 

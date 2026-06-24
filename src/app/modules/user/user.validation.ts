@@ -39,9 +39,6 @@ const createAdminValidationSchema = z.object({
         }),
         email: z.string({
             error: "Email is required!"
-        }),
-        contactNumber: z.string({
-            error: "Contact Number is required!"
         })
     })
 });

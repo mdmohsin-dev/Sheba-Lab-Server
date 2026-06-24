@@ -8,6 +8,17 @@ import validateRequest from "../../middlewares/validateRequest";
 const router: Router = express.Router();
 
 
+router.get(
+    '/',
+    // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+    DoctorScheduleController.getAllFromDB
+);
+
+router.get(
+    '/my-schedule',
+    auth(UserRole.DOCTOR),
+    DoctorScheduleController.getMySchedule
+)
 
 router.post(
     "/",
@@ -15,5 +26,11 @@ router.post(
     validateRequest(DoctorScheduleValidation.createDoctorScheduleValidationSchema),
     DoctorScheduleController.insertIntoDB
 )
+router.delete(
+    '/:id',
+    auth(UserRole.DOCTOR),
+    DoctorScheduleController.deleteFromDB
+);
+
 
 export const DoctorScheduleRoutes = router;

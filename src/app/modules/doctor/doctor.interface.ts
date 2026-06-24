@@ -13,9 +13,9 @@ export type IDoctorUpdateInput = {
     qualification: string;
     currentWorkingPlace: string;
     designation: string;
-    isDeleted: boolean;
+    isdeleted: boolean;
     specialties: {
         specialtyId: string;
-        isDeleted?: boolean;
+        isdeleted?: boolean;
     }[]
 }

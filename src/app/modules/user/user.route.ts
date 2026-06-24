@@ -41,8 +41,8 @@ router.post('/create-doctor',
 
 
 router.post('/create-admin',
-    // auth(UserRole.ADMIN),
-    auth(UserRole.ADMIN), FileUploader.upload.single('file'),
+    // auth(UserRole.ADMIN), 
+    FileUploader.upload.single('file'),
     (req: Request, res: Response, next: NextFunction) => {
         req.body = userValidation.createAdminValidationSchema.parse(JSON.parse(req.body.data))
         return UserController.createAdmin(req, res, next)
