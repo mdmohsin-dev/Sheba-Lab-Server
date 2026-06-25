@@ -5,6 +5,8 @@ import { UserRole } from '../../../../generated/prisma/enums';
 
 const router:Router = express.Router();
 
+router.get('/', ReviewController.getAllFromDB);
+
 router.post(
     '/',
     auth(UserRole.PATIENT),

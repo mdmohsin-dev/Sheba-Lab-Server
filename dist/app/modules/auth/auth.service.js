@@ -1,0 +1,210 @@
+import bcrypt from "bcryptjs";
+import { UserStatus } from "../../../../generated/prisma/enums";
+import { prisma } from "../../../../lib/prisma";
+import { JwtHelper } from "../../helper/jwtHelper";
+import config from "../../../config";
+import APIError from "../../errors/APIError";
+import httpStatus from "http-status";
+import emailSender from "./emailSender";
+const login = async (payload) => {
+    const user = await prisma.user.findUniqueOrThrow({
+        where: {
+            email: payload.email,
+            status: UserStatus.ACTIVE
+        }
+    });
+    const isPasswwordMatched = await bcrypt.compare(payload.password, user.password);
+    if (!isPasswwordMatched) {
+        throw new APIError(httpStatus.BAD_REQUEST, "Invalid credentials");
+    }
+    const accessToken = JwtHelper.generateToken({ email: user.email, role: user.role }, config.jwt.jwt_access_secret, config.jwt.jwt_access_token_expires);
+    const refreshToken = JwtHelper.generateToken({ email: user.email, role: user.role }, config.jwt.jwt_refresh_secret, config.jwt.jwt_refresh_token_expires_in);
+    return {
+        accessToken,
+        refreshToken,
+        needPasswordChange: user.needPasswordChange
+    };
+};
+const refreshToken = async (token) => {
+    let decodedData;
+    try {
+        decodedData = JwtHelper.verifyToken(token, config.jwt.jwt_refresh_secret);
+    }
+    catch (err) {
+        throw new Error("You are not authorized!");
+    }
+    const userData = await prisma.user.findUniqueOrThrow({
+        where: {
+            email: decodedData.email,
+            status: UserStatus.ACTIVE
+        }
+    });
+    const accessToken = JwtHelper.generateToken({
+        email: userData.email,
+        role: userData.role
+    }, config.jwt.jwt_access_secret, config.jwt.jwt_access_token_expires);
+    const refreshToken = JwtHelper.generateToken({
+        email: userData.email,
+        role: userData.role
+    }, config.jwt.jwt_refresh_secret, config.jwt.jwt_refresh_token_expires_in);
+    return {
+        accessToken,
+        refreshToken,
+        needPasswordChange: userData.needPasswordChange
+    };
+};
+const changePassword = async (user, payload) => {
+    const userData = await prisma.user.findUniqueOrThrow({
+        where: {
+            email: user.email,
+            status: UserStatus.ACTIVE
+        }
+    });
+    if (!userData.password) {
+        throw new APIError(httpStatus.BAD_REQUEST, "Password not set for this account!");
+    }
+    const isCorrectPassword = await bcrypt.compare(payload.oldPassword, userData.password);
+    if (!isCorrectPassword) {
+        throw new Error("Password incorrect!");
+    }
+    const hashedPassword = await bcrypt.hash(payload.newPassword, Number(config.jwt.solt_round));
+    await prisma.user.update({
+        where: {
+            email: userData.email
+        },
+        data: {
+            password: hashedPassword,
+            needPasswordChange: false
+        }
+    });
+    return {
+        message: "Password changed successfully!"
+    };
+};
+const forgotPassword = async (payload) => {
+    const userData = await prisma.user.findUniqueOrThrow({
+        where: {
+            email: payload.email,
+            status: UserStatus.ACTIVE
+        }
+    });
+    const resetPassToken = JwtHelper.generateToken({ email: userData.email, role: userData.role }, config.jwt.jwt_reset_pass_secret, config.jwt.reset_pass_token_expires_in);
+    const resetPassLink = config.jwt.jwt_reset_pass_link + `?userId=${userData.id}&token=${resetPassToken}`;
+    await emailSender(userData.email, `
+        <div>
+            <p>Dear User,</p>
+            <p>Your password reset link 
+                <a href=${resetPassLink}>
+                    <button>
+                        Reset Password
+                    </button>
+                </a>
+            </p>
+
+        </div>
+        `);
+};
+// const resetPassword = async (token: string, payload: { id: string, password: string }) => {
+//     const userData = await prisma.user.findUniqueOrThrow({
+//         where: {
+//             id: payload.id,
+//             status: UserStatus.ACTIVE
+//         }
+//     });
+//     const isValidToken = JwtHelper.verifyToken(token, config.jwt.jwt_reset_pass_secret as Secret)
+//     if (!isValidToken) {
+//         throw new APIError(httpStatus.FORBIDDEN, "Forbidden!")
+//     }
+//     // hash password
+//     const password = await bcrypt.hash(payload.password, Number(config.jwt.solt_round));
+//     // update into database
+//     await prisma.user.update({
+//         where: {
+//             id: payload.id
+//         },
+//         data: {
+//             password,
+//             needPasswordChange:false
+//         }
+//     })
+// };
+const getMe = async (user) => {
+    const accessToken = user.accessToken;
+    const decodedData = JwtHelper.verifyToken(accessToken, config.jwt.jwt_access_secret);
+    const userData = await prisma.user.findUniqueOrThrow({
+        where: {
+            email: decodedData.email,
+            status: UserStatus.ACTIVE
+        },
+        select: {
+            id: true,
+            email: true,
+            role: true,
+            needPasswordChange: true,
+            status: true,
+            createdAt: true,
+            updatedAt: true,
+            admin: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    profilePhoto: true,
+                    contactNumber: true,
+                    isdeleted: true,
+                    createdAt: true,
+                    updatedAt: true,
+                }
+            },
+            doctor: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    profilePhoto: true,
+                    contactNumber: true,
+                    address: true,
+                    registrationNumber: true,
+                    experience: true,
+                    gender: true,
+                    appointmentFee: true,
+                    qualification: true,
+                    currentWorkingPlace: true,
+                    averageRating: true,
+                    isdeleted: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    doctorSpecialties: {
+                        include: {
+                            specialities: true
+                        }
+                    }
+                }
+            },
+            patient: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    profilePhoto: true,
+                    contactNumber: true,
+                    address: true,
+                    isdeleted: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    patientHealthData: true,
+                }
+            }
+        }
+    });
+    return userData;
+};
+export const AuthService = {
+    login,
+    changePassword,
+    forgotPassword,
+    refreshToken,
+    // resetPassword,
+    getMe
+};
+//# sourceMappingURL=auth.service.js.map

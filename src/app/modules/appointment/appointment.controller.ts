@@ -30,7 +30,8 @@ const getMyAppointment = catchAsync(async (req: Request & { user?: IJWTPayload }
         statusCode: 200,
         success: true,
         message: "Appointment fetched successfully!",
-        data: result
+        data: result.data,
+        meta:result.meta
     })
 })
 

@@ -6,10 +6,21 @@ const router:Router = express.Router();
 
 
 router.get(
+    '/',
+    auth(
+        // UserRole.SUPER_ADMIN, 
+        UserRole.ADMIN),
+    PrescriptionController.getAllFromDB
+);
+
+
+
+router.get(
     '/my-prescription',
     auth(UserRole.PATIENT),
     PrescriptionController.patientPrescription
 )
+
 
 router.post(
     "/",

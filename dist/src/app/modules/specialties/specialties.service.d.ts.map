@@ -1,0 +1,1 @@
+{"version":3,"file":"specialties.service.d.ts","sourceRoot":"","sources":["../../../../../src/app/modules/specialties/specialties.service.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,SAAS,CAAC;AAGvC,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,qCAAqC,CAAC;AA+BvE,eAAO,MAAM,kBAAkB;uBA7BC,OAAO;;;;;wBAgBR,OAAO,CAAC,WAAW,EAAE,CAAC;uBAIrB,MAAM,KAAG,OAAO,CAAC,WAAW,CAAC;CAa5D,CAAA"}

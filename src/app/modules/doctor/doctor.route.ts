@@ -7,7 +7,11 @@ router.get(
     DoctorController.getAllFromDB
 )
 
+router.get('/:id', DoctorController.getByIdFromDB);
+
+
 router.post("/suggestion", DoctorController.getAISuggestions);
+
 
 router.patch(
     "/:id",

@@ -4,6 +4,7 @@ import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 import { DoctorService } from "./doctor.service";
 import { doctorFilterableFields } from "./doctor.constant";
+import httpStatus from "http-status"
 
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     const options = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);
@@ -49,8 +50,21 @@ const getAISuggestions = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await DoctorService.getByIdFromDB(id as string);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Doctor retrieval successfully',
+        data: result,
+    });
+});
+
+
 export const DoctorController = {
     getAllFromDB,
     updateIntoDB,
-    getAISuggestions
+    getAISuggestions,
+    getByIdFromDB
 }

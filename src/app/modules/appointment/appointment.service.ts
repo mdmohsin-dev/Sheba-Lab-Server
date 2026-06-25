@@ -6,6 +6,8 @@ import type { IJWTPayload } from "../../types/common"
 import { v4 as uuidv4 } from "uuid";
 import APIError from "../../errors/APIError";
 import httpStatus from "http-status"
+import type { IAuthUser } from "../../interfaces/common";
+import type { IPaginationOptions } from "../../interfaces/pagination";
 
 const createAppointment = async (user: IJWTPayload, payload: { doctorId: string, scheduleId: string }) => {
     const patientData = await prisma.patient.findUniqueOrThrow({
@@ -96,23 +98,23 @@ const createAppointment = async (user: IJWTPayload, payload: { doctorId: string,
 }
 
 
-const getMyAppointment = async (user: IJWTPayload, filters: any, options: IOptions) => {
-    const { page, limit, skip, sortBy, sortOrder } = paginationHelper.calculatePagination(options);
+const getMyAppointment = async (user: IAuthUser, filters: any, options: IPaginationOptions) => {
+    const { page, limit, skip, sortBy, sortOrder } = paginationHelper.calculatePagination(options as any);
     const { ...filterData } = filters;
 
     const andConditions: Prisma.AppointmentWhereInput[] = [];
 
-    if (user.role === UserRole.PATIENT) {
+    if (user?.role === UserRole.PATIENT) {
         andConditions.push({
             patient: {
-                email: user.email
+                email: user?.email
             }
         })
     }
-    else if (user.role === UserRole.DOCTOR) {
+    else if (user?.role === UserRole.DOCTOR) {
         andConditions.push({
             doctor: {
-                email: user.email
+                email: user?.email
             }
         })
     }
@@ -136,8 +138,38 @@ const getMyAppointment = async (user: IJWTPayload, filters: any, options: IOptio
         orderBy: {
             [sortBy]: sortOrder
         },
-        include: user.role === UserRole.DOCTOR ?
-            { patient: true } : { doctor: true }
+        include: user?.role === UserRole.DOCTOR ?
+            {
+                patient: true,
+                schedule: true,
+                prescription: true,
+                review: true,
+                payment: true,
+                doctor: {
+                    include: {
+                        doctorSpecialties: {
+                            include: {
+                                specialities: true
+                            }
+                        }
+                    }
+                }
+            } : {
+                doctor: {
+                    include: {
+                        doctorSpecialties: {
+                            include: {
+                                specialities: true
+                            }
+                        }
+                    }
+                },
+                schedule: true,
+                prescription: true,
+                review: true,
+                payment: true,
+                patient: true
+            }
     });
 
     const total = await prisma.appointment.count({
@@ -152,6 +184,7 @@ const getMyAppointment = async (user: IJWTPayload, filters: any, options: IOptio
         },
         data: result
     }
+
 }
 
 

@@ -4,8 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "build":"tsc",
+    "start": "node ./dist/server.js",
+    "db:generate": "prisma generate --schema=./prisma/schema",
+    "db:migrate": "prisma migrate --schema=./prisma/schema",
+    "db:push": "prisma db push --schema=./prisma/schema",
+    "db:pull": "prisma db pull --schema=./prisma/schema",
+    "db:studio": "prisma studio --schema=./prisma/schema",
+    "postinstall": "prisma generate --schema=./prisma/schema",
+    "stripe:webhook": "stripe listen --forward-to localhost:5000/webhook"
   },
   "keywords": [],
   "type": "module",
@@ -46,6 +54,7 @@
     "openai": "^6.42.0",
     "pg": "^8.21.0",
     "stripe": "^22.2.1",
+    "ts-node-dev": "^2.0.0",
     "uuid": "^14.0.0",
     "zod": "^4.4.3"
   }

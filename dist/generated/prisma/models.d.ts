@@ -1,0 +1,16 @@
+export type * from './models/Appointment';
+export type * from './models/Payment';
+export type * from './models/Prescription';
+export type * from './models/Review';
+export type * from './models/PatientHealthData';
+export type * from './models/MedicalReport';
+export type * from './models/Schedule';
+export type * from './models/DoctorSchedules';
+export type * from './models/Specialties';
+export type * from './models/DoctorSpecialties';
+export type * from './models/User';
+export type * from './models/Admin';
+export type * from './models/Doctor';
+export type * from './models/Patient';
+export type * from './commonInputTypes';
+//# sourceMappingURL=models.d.ts.map
