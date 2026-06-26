@@ -1,9 +1,0 @@
-import express, { Router } from 'express';
-import { ReviewController } from './review.controller';
-import auth from '../../middlewares/auth';
-import { UserRole } from '../../../../generated/prisma/enums';
-const router = express.Router();
-router.get('/', ReviewController.getAllFromDB);
-router.post('/', auth(UserRole.PATIENT), ReviewController.insertIntoDB);
-export const ReviewRoutes = router;
-//# sourceMappingURL=review.route.js.map
