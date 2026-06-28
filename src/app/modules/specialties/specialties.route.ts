@@ -1,9 +1,9 @@
 import express, { type NextFunction, type Request, type Response, Router } from 'express';
-import { SpecialtiesController } from './specialties.controller';
-import auth from '../../middlewares/auth';
-import { FileUploader } from '../../helper/FileUploader';
-import { SpecialtiesValidtaion } from './specialties.validation';
-import { UserRole } from '../../../../generated/prisma/enums';
+import { SpecialtiesController } from './specialties.controller.ts';
+import { FileUploader } from '../../helper/FileUploader.ts';
+import { SpecialtiesValidtaion } from './specialties.validation.ts';
+import { UserRole } from '../../../generated/prisma/enums.ts';
+import auth from '../../middlewares/auth.ts';
 
 
 const router:Router = express.Router();

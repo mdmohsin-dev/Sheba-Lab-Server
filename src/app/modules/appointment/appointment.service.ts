@@ -1,15 +1,13 @@
-// import { AppointmentStatus, PaymentStatus, UserRole, type Prisma } from "../../../../generated/prisma/client";
-import { prisma } from "../../../../lib/prisma"
-import { paginationHelper, type IOptions } from "../../helper/paginationHelper";
-import { stripe } from "../../helper/stripe";
-import type { IJWTPayload } from "../../types/common"
 import { v4 as uuidv4 } from "uuid";
-import APIError from "../../errors/APIError";
 import httpStatus from "http-status"
-import type { IAuthUser } from "../../interfaces/common";
-import type { IPaginationOptions } from "../../interfaces/pagination";
-import { AppointmentStatus, PaymentStatus, UserRole } from "../../../../generated/prisma/enums";
-import type { Prisma } from "../../../../generated/prisma/client";
+import type { IJWTPayload } from "../../types/common.ts";
+import type { IAuthUser } from "../../interfaces/common.ts";
+import type { IPaginationOptions } from "../../interfaces/pagination.ts";
+import { paginationHelper } from "../../helper/paginationHelper.ts";
+import APIError from "../../errors/APIError.ts";
+import { prisma } from '../../../lib/prisma.ts';
+import { stripe } from "../../helper/stripe.ts";
+import { AppointmentStatus, PaymentStatus, UserRole, type Prisma } from "../../../generated/prisma/client.ts";
 
 const createAppointment = async (user: IJWTPayload, payload: { doctorId: string, scheduleId: string }) => {
     const patientData = await prisma.patient.findUniqueOrThrow({

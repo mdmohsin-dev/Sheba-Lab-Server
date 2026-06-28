@@ -1,7 +1,7 @@
 import express, { type Router } from "express";
-import auth from "../../middlewares/auth";
-import { UserRole } from "../../../../generated/prisma/enums";
-import { ScheduleController } from "./schedule.controller";
+import { UserRole } from "../../../generated/prisma/enums.ts";
+import { ScheduleController } from "./schedule.controller.ts";
+import auth from "../../middlewares/auth.ts";
 
 const router: Router = express.Router();
 

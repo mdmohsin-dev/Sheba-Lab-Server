@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import sendResponse from "../../shared/sendResponse";
-import { ScheduleService } from "./schedule.service";
-import pick from "../../helper/pick";
-import type { IJWTPayload } from "../../types/common";
+import catchAsync from "../../shared/catchAsync.ts";
+import { ScheduleService } from "./schedule.service.ts";
+import sendResponse from "../../shared/sendResponse.ts";
+import type { IJWTPayload } from "../../types/common.ts";
+import pick from "../../helper/pick.ts";
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
 

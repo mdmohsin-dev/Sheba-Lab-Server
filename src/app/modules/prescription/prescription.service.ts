@@ -1,10 +1,10 @@
 import httpStatus from 'http-status'
-import { AppointmentStatus, PaymentStatus, Prisma, UserRole, type Prescription } from "../../../../generated/prisma/client";
-import type { IJWTPayload } from '../../types/common';
-import { prisma } from '../../../../lib/prisma';
-import APIError from '../../errors/APIError';
-import { paginationHelper, type IOptions } from '../../helper/paginationHelper';
-import type { IPaginationOptions } from '../../interfaces/pagination';
+import type { IJWTPayload } from '../../types/common.ts';
+import { AppointmentStatus, PaymentStatus, Prisma, UserRole, type Prescription } from '../../../generated/prisma/client.ts';
+import { prisma } from '../../../lib/prisma.ts';
+import APIError from '../../errors/APIError.ts';
+import { paginationHelper, type IOptions } from '../../helper/paginationHelper.ts';
+import type { IPaginationOptions } from '../../interfaces/pagination.ts';
 
 const createPrescription = async (user: IJWTPayload, payload: Partial<Prescription>) => {
 

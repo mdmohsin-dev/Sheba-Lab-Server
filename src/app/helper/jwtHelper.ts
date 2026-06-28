@@ -1,6 +1,6 @@
 import type { JwtPayload, Secret, SignOptions } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
-import config from "../../config";
+import config from "../../config/index.ts";
 
 
 const generateToken = (payload: any, secret: Secret, expiresIn: string) => {

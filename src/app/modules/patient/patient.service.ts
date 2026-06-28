@@ -1,9 +1,10 @@
-import { type IOptions, paginationHelper } from '../../helper/paginationHelper';
-import { UserStatus, type Patient, type Prisma } from '../../../../generated/prisma/client';
-import { patientSearchableFields } from './patient.constant';
-import type { IJWTPayload } from '../../types/common';
-import type { IPatientFilterRequest } from './patient.interface';
-import { prisma } from '../../../../lib/prisma';
+import { UserStatus, type Patient, type Prisma } from "../../../generated/prisma/client.ts";
+import { prisma } from "../../../lib/prisma.ts";
+import { paginationHelper, type IOptions } from "../../helper/paginationHelper.ts";
+import type { IJWTPayload } from "../../types/common.ts";
+import { patientSearchableFields } from "./patient.constant.ts";
+import type { IPatientFilterRequest } from "./patient.interface.ts";
+
 
 
 const getAllFromDB = async (

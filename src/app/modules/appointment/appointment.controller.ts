@@ -1,13 +1,13 @@
 import type { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import sendResponse from "../../shared/sendResponse";
-import type { IJWTPayload } from "../../types/common";
-import { AppointmentService } from "./appointment.service";
-import pick from "../../helper/pick";
 import httpStatus from "http-status"
-import type { IAuthUser } from "../../interfaces/common";
-import { appointmentFilterableFields } from "./appointment.constant";
-import APIError from "../../errors/APIError";
+import catchAsync from "../../shared/catchAsync.ts";
+import type { IJWTPayload } from "../../types/common.ts";
+import { AppointmentService } from "./appointment.service.ts";
+import sendResponse from "../../shared/sendResponse.ts";
+import pick from "../../helper/pick.ts";
+import { appointmentFilterableFields } from "./appointment.constant.ts";
+import APIError from "../../errors/APIError.ts";
+import type { IAuthUser } from "../../interfaces/common.ts";
 
 
 

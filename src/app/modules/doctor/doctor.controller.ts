@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
-import pick from "../../helper/pick";
-import catchAsync from "../../shared/catchAsync";
-import sendResponse from "../../shared/sendResponse";
-import { DoctorService } from "./doctor.service";
-import { doctorFilterableFields } from "./doctor.constant";
 import httpStatus from "http-status"
+import catchAsync from "../../shared/catchAsync.ts";
+import pick from "../../helper/pick.ts";
+import { doctorFilterableFields } from "./doctor.constant.ts";
+import { DoctorService } from "./doctor.service.ts";
+import sendResponse from "../../shared/sendResponse.ts";
 
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     const options = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);

@@ -1,10 +1,10 @@
-import type { Prisma } from "../../../../generated/prisma/client";
-import { prisma } from "../../../../lib/prisma";
-import APIError from "../../errors/APIError";
-import { paginationHelper } from "../../helper/paginationHelper";
-import type { IPaginationOptions } from "../../interfaces/pagination";
-import type { IJWTPayload } from "../../types/common";
 import httpStatus from 'http-status'
+import type { IJWTPayload } from '../../types/common.ts';
+import { prisma } from '../../../lib/prisma.ts';
+import APIError from '../../errors/APIError.ts';
+import type { IPaginationOptions } from '../../interfaces/pagination.ts';
+import { paginationHelper } from '../../helper/paginationHelper.ts';
+import type { Prisma } from '../../../generated/prisma/client.ts';
 
 
 const insertIntoDB = async (user: IJWTPayload, payload: any) => {

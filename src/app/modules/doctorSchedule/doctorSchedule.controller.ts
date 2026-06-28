@@ -1,12 +1,12 @@
 import type { Request, Response } from "express"
-import catchAsync from "../../shared/catchAsync"
-import sendResponse from "../../shared/sendResponse"
-import { DoctorScheduleService } from "./doctorSchedule.service"
-import type { IJWTPayload } from "../../types/common"
-import pick from "../../helper/pick"
 import httpStatus from "http-status"
-import type { IAuthUser } from "../../interfaces/common"
-import { scheduleFilterableFields } from "./doctorSchedule.constants"
+import catchAsync from "../../shared/catchAsync.ts"
+import { DoctorScheduleService } from "./doctorSchedule.service.ts"
+import type { IJWTPayload } from "../../types/common.ts"
+import sendResponse from "../../shared/sendResponse.ts"
+import pick from "../../helper/pick.ts"
+import type { IAuthUser } from "../../interfaces/common.ts"
+import { scheduleFilterableFields } from "./doctorSchedule.constants.ts"
 
 const insertIntoDB = catchAsync(async (req: Request &{user?:IJWTPayload}, res: Response) => {
 

@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
-import auth from '../../middlewares/auth';
-import { UserRole } from '../../../../generated/prisma/enums';
-import { PrescriptionController } from './prescription.controller';
+import auth from '../../middlewares/auth.ts';
+import { UserRole } from '../../../generated/prisma/enums.ts';
+import { PrescriptionController } from './prescription.controller.ts';
 const router:Router = express.Router();
 
 

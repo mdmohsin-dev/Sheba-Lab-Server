@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
-import { MetaController } from './meta.controller';
-import auth from '../../middlewares/auth';
-import { UserRole } from '../../../../generated/prisma/enums';
+import auth from '../../middlewares/auth.ts';
+import { UserRole } from '../../../generated/prisma/enums.ts';
+import { MetaController } from './meta.controller.ts';
 
 const router:Router = express.Router();
 
