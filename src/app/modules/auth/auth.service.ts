@@ -5,12 +5,12 @@ import type { Secret } from "jsonwebtoken";
 import APIError from "../../errors/APIError.ts";
 import { JwtHelper } from "../../helper/jwtHelper.ts";
 import config from "../../../config/index.ts";
-import { Prisma, UserStatus } from "../../../generated/prisma/client.ts";
+import { UserStatus } from "../../../generated/prisma/client.ts";
 import { prisma } from "../../../lib/prisma.ts";
 import emailSender from "./emailSender.ts";
 
 const login = async (payload: { email: string; password: string }) => {
-    const user = await Prisma.user.findUniqueOrThrow({
+    const user = await prisma.user.findUniqueOrThrow({
         where: {
             email: payload.email,
             status: UserStatus.ACTIVE
