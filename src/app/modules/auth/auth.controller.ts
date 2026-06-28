@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import sendResponse from "../../shared/sendResponse";
-import { AuthService } from "./auth.service";
 import httpStatus from "http-status"
+import catchAsync from "../../shared/catchAsync.ts";
+import { AuthService } from "./auth.service.ts";
+import sendResponse from "../../shared/sendResponse.ts";
 
 const login = catchAsync(async (req: Request, res: Response) => {
     const result = await AuthService.login(req.body)

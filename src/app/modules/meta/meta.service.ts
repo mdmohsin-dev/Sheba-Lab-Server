@@ -1,8 +1,9 @@
-import { PaymentStatus, UserRole } from "../../../../generated/prisma/enums";
-import { prisma } from "../../../../lib/prisma";
-import APIError from "../../errors/APIError";
-import type { IJWTPayload } from "../../types/common";
+
 import httpStatus from 'http-status'
+import type { IJWTPayload } from '../../types/common.ts';
+import { prisma } from '../../../lib/prisma.ts';
+import { PaymentStatus, UserRole } from '../../../generated/prisma/enums.ts';
+import APIError from '../../errors/APIError.ts';
 
 
 const fetchDashboardMetaData = async (user: IJWTPayload) => {

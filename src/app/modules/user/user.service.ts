@@ -1,12 +1,12 @@
 import bcrypt from "bcryptjs";
-import { prisma } from "../../../../lib/prisma";
 import type { Request } from "express";
-import { FileUploader } from "../../helper/FileUploader";
-import { UserRole, UserStatus } from "../../../../generated/prisma/enums";
-import { paginationHelper } from "../../helper/paginationHelper";
-import type { Prisma } from "../../../../generated/prisma/client";
-import { userSearchableFields } from "./user.constant";
-import type { IJWTPayload } from "../../types/common";
+import { FileUploader } from "../../helper/FileUploader.ts";
+import { UserRole, UserStatus } from "../../../generated/prisma/enums.ts";
+import { prisma } from "../../../lib/prisma.ts";
+import type { IJWTPayload } from "../../types/common.ts";
+import { paginationHelper } from "../../helper/paginationHelper.ts";
+import type { Prisma } from "../../../generated/prisma/client.ts";
+import { userSearchableFields } from "./user.constant.ts";
 
 const createPatient = async (req: Request) => {
     if (req.file) {

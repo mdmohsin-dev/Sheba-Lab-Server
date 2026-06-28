@@ -1,12 +1,12 @@
-import { paginationHelper, type IOptions } from "../../helper/paginationHelper";
-import type { Doctor, Prisma } from "../../../../generated/prisma/client";
-import { doctorSearchableFields } from "./doctor.constant";
-import { prisma } from "../../../../lib/prisma";
-import type { IDoctorUpdateInput } from "./doctor.interface";
-import APIError from "../../errors/APIError";
 import httpStatus from "http-status"
-import { openai } from "../../helper/open-router";
-import { extractJsonFromMessage } from "../../helper/extractJsonFromMessage";
+import { paginationHelper, type IOptions } from "../../helper/paginationHelper.ts";
+import { doctorSearchableFields } from "./doctor.constant.ts";
+import type { IDoctorUpdateInput } from "./doctor.interface.ts";
+import APIError from "../../errors/APIError.ts";
+import { extractJsonFromMessage } from "../../helper/extractJsonFromMessage.ts";
+import type { Doctor, Prisma } from "../../../generated/prisma/client.ts";
+import { prisma } from "../../../lib/prisma.ts";
+import { openai } from "../../helper/open-router.ts";
 
 const getAllFromDB = async (filters: any, options: IOptions) => {
     const { page, limit, skip, sortBy, sortOrder } =

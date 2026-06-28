@@ -1,6 +1,6 @@
 import Stripe from "stripe";
-import { prisma } from "../../../../lib/prisma";
-import { PaymentStatus } from "../../../../generated/prisma/enums";
+import { prisma } from "../../../lib/prisma.ts";
+import { PaymentStatus } from "../../../generated/prisma/enums.ts";
 
 const handleStripeWebhookEvent = async (event: Stripe.Event) => {
     switch (event.type) {

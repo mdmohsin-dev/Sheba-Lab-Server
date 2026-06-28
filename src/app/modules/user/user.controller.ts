@@ -1,11 +1,11 @@
 import type { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import { UserService } from "./user.service";
-import sendResponse from "../../shared/sendResponse";
-import pick from "../../helper/pick";
-import { userFilterableFields } from "./user.constant";
-import type { IJWTPayload } from "../../types/common";
 import httpStatus from "http-status"
+import catchAsync from "../../shared/catchAsync.ts";
+import sendResponse from "../../shared/sendResponse.ts";
+import { UserService } from "./user.service.ts";
+import type { IJWTPayload } from "../../types/common.ts";
+import { userFilterableFields } from "./user.constant.ts";
+import pick from "../../helper/pick.ts";
 
 const createPatient = catchAsync(async (req: Request, res: Response) => {
     const result = await UserService.createPatient(req)

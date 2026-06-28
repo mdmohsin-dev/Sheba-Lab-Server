@@ -1,11 +1,11 @@
 import type { Request, Response } from 'express';
 import httpStatus from 'http-status';
-import catchAsync from '../../shared/catchAsync';
-import pick from '../../helper/pick';
-import { PatientService } from './patient.service';
-import sendResponse from '../../shared/sendResponse';
-import type { IJWTPayload } from '../../types/common';
-import { patientFilterableFields } from './patient.constant';
+import catchAsync from '../../shared/catchAsync.ts';
+import pick from '../../helper/pick.ts';
+import { patientFilterableFields } from './patient.constant.ts';
+import { PatientService } from './patient.service.ts';
+import sendResponse from '../../shared/sendResponse.ts';
+import type { IJWTPayload } from '../../types/common.ts';
 
 
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {

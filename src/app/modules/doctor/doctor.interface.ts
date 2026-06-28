@@ -1,5 +1,4 @@
-import type { Gender } from "../../../../generated/prisma/enums";
-
+import type { Gender } from "../../../generated/prisma/enums.ts";
 
 export type IDoctorUpdateInput = {
     email: string;

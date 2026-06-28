@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express"
-import { JwtHelper } from "../helper/jwtHelper";
-import config from "../../config";
+import { JwtHelper } from "../helper/jwtHelper.ts";
+import config from "../../config/index.ts";
 
 const auth = (...roles: string[]) => {
     return async (req: Request & { user?: any }, res: Response, next: NextFunction) => {

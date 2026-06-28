@@ -1,11 +1,11 @@
 import type { Request, Response } from "express";
-import catchAsync from "../../shared/catchAsync";
-import { PrescriptionService } from "./prescription.service";
-import sendResponse from "../../shared/sendResponse";
-import type { IJWTPayload } from "../../types/common";
-import pick from "../../helper/pick";
 import httpStatus from "http-status"
-import { prescriptionFilterableFields } from "./prescription.constants";
+import catchAsync from "../../shared/catchAsync.ts";
+import { PrescriptionService } from "./prescription.service.ts";
+import sendResponse from "../../shared/sendResponse.ts";
+import pick from "../../helper/pick.ts";
+import type { IJWTPayload } from "../../types/common.ts";
+import { prescriptionFilterableFields } from "./prescription.constants.ts";
 
 const createPrescription = catchAsync(async (req: Request & { user?: IJWTPayload }, res: Response) => {
     const user = req.user;

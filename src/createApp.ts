@@ -1,14 +1,14 @@
 import express from 'express';
 import type { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-import globalErrorHandler from './app/middlewares/globalErrorHandler';
-import notFound from './app/middlewares/notFound';
-import config from './config';
-import router from './app/routes';
+import globalErrorHandler from './app/middlewares/globalErrorHandler.ts';
+import notFound from './app/middlewares/notFound.ts';
 import cookieParser from 'cookie-parser';
-import { PaymentController } from './app/modules/payment/payment.controller';
+import { PaymentController } from './app/modules/payment/payment.controller.ts';
 import cron from 'node-cron';
-import { AppointmentService } from './app/modules/appointment/appointment.service';
+import config from './config/index.ts';
+import router from './app/routes/index.ts';
+import { AppointmentService } from './app/modules/appointment/appointment.service.ts';
 
 const app: Application = express();
 app.use(cookieParser());

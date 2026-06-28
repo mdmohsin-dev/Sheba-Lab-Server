@@ -1,12 +1,14 @@
+
 import express, { type Router } from "express";
-import { DoctorScheduleController } from "./doctorSchedule.controller";
-import auth from "../../middlewares/auth";
-import { UserRole } from "../../../../generated/prisma/enums";
-import { DoctorScheduleValidation } from "./doctorSchedule.validation";
-import validateRequest from "../../middlewares/validateRequest";
+import { DoctorScheduleController } from "./doctorSchedule.controller.ts";
+import auth from "../../middlewares/auth.ts";
+import { DoctorScheduleValidation } from "./doctorSchedule.validation.ts";
+import validateRequest from "../../middlewares/validateRequest.ts";
+import { UserRole } from "../../../generated/prisma/enums.ts";
 
 const router: Router = express.Router();
 
+// example.com/api/v2/schedule
 
 router.get(
     '/',

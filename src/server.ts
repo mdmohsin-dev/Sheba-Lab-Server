@@ -1,6 +1,6 @@
 import { Server } from 'http';
-import app from './createApp';
-import config from './config';
+import app from './createApp.ts';
+import config from './config/index.ts';
 
 
 async function bootstrap() {
@@ -44,3 +44,4 @@ async function bootstrap() {
 }
 
 bootstrap();
+

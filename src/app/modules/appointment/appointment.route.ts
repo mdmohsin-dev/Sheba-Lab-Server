@@ -1,11 +1,12 @@
 import type { Router } from "express";
 import express from "express"
-import { AppointmentController } from "./appointment.controller";
-import auth from "../../middlewares/auth";
-import { UserRole } from "../../../../generated/prisma/enums";
-import validateRequest from "../../middlewares/validateRequest";
-import { AppointmentValidation } from "./appointment.validation";
-import { paymentLimiter } from "../../middlewares/rateLimiter";
+import auth from "../../middlewares/auth.ts";
+import { UserController } from "../user/user.controller.ts";
+import { AppointmentController } from "./appointment.controller.ts";
+import { AppointmentValidation } from "./appointment.validation.ts";
+import validateRequest from "../../middlewares/validateRequest.ts";
+import { paymentLimiter } from "../../middlewares/rateLimiter.ts";
+import { UserRole } from "../../../generated/prisma/enums.ts";
 
 const router: Router = express.Router()
 

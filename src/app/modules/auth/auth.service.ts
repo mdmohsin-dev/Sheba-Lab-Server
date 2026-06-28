@@ -1,15 +1,16 @@
+// import { UserStatus } from './../../../../generated/prisma/enums';
 import bcrypt from "bcryptjs";
-import { UserStatus } from "../../../../generated/prisma/enums";
-import { prisma } from "../../../../lib/prisma";
-import { JwtHelper } from "../../helper/jwtHelper";
-import config from "../../../config";
-import APIError from "../../errors/APIError";
 import httpStatus from "http-status"
 import type { Secret } from "jsonwebtoken";
-import emailSender from "./emailSender";
+import APIError from "../../errors/APIError.ts";
+import { JwtHelper } from "../../helper/jwtHelper.ts";
+import config from "../../../config/index.ts";
+import { Prisma, UserStatus } from "../../../generated/prisma/client.ts";
+import { prisma } from "../../../lib/prisma.ts";
+import emailSender from "./emailSender.ts";
 
 const login = async (payload: { email: string; password: string }) => {
-    const user = await prisma.user.findUniqueOrThrow({
+    const user = await Prisma.user.findUniqueOrThrow({
         where: {
             email: payload.email,
             status: UserStatus.ACTIVE

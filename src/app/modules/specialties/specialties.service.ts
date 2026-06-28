@@ -1,7 +1,7 @@
 import type { Request } from "express";
-import { FileUploader } from "../../helper/FileUploader";
-import { prisma } from "../../../../lib/prisma";
-import type { Specialties } from "../../../../generated/prisma/client";
+import { FileUploader } from "../../helper/FileUploader.ts";
+import { prisma } from "../../../lib/prisma.ts";
+import type { Specialties } from "../../../generated/prisma/client.ts";
 
 const inserIntoDB = async (req: Request) => {
 

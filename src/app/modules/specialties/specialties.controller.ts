@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
-import { SpecialtiesService } from "./specialties.service";
-import catchAsync from "../../shared/catchAsync";
-import sendResponse from "../../shared/sendResponse";
+import catchAsync from "../../shared/catchAsync.ts";
+import sendResponse from "../../shared/sendResponse.ts";
+import { SpecialtiesService } from "./specialties.service.ts";
 
 const inserIntoDB = catchAsync(async (req: Request, res: Response) => {
     const result = await SpecialtiesService.inserIntoDB(req);

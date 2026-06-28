@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { DoctorController } from "./doctor.controller";
+import { DoctorController } from "./doctor.controller.ts";
 const router:Router = express.Router();
 
 router.get(
