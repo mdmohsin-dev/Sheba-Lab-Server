@@ -15,7 +15,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
-    "noEmit": true,
+    // "noEmit": true,
+    "rewriteRelativeImportExtensions": true,
     /* Types */
     "types": [
       "node"
@@ -39,11 +40,9 @@
   },
   "include": [
     "src/**/*",
-    "prisma.config.ts"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "prisma.config.ts"
+    "dist"
   ]
 }
