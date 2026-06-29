@@ -1,1 +1,0 @@
-{"version":3,"file":"patient.interface.d.ts","sourceRoot":"","sources":["../../../../src/app/modules/patient/patient.interface.ts"],"names":[],"mappings":"AACA,MAAM,MAAM,qBAAqB,GAAG;IAChC,UAAU,CAAC,EAAE,MAAM,GAAG,SAAS,CAAC;IAChC,KAAK,CAAC,EAAE,MAAM,GAAG,SAAS,CAAC;IAC3B,SAAS,CAAC,EAAE,MAAM,GAAG,SAAS,CAAC;CAClC,CAAC"}
