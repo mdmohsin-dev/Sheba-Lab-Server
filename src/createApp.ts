@@ -13,7 +13,7 @@ import { AppointmentService } from './app/modules/appointment/appointment.servic
 const app: Application = express();
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://sheba-lab-client.vercel.app',
     credentials: true
 }));
 

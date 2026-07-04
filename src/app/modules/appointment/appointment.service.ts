@@ -476,8 +476,8 @@ const initiatePaymentForAppointment = async (appointmentId: string, user: IAuthU
             appointmentId: appointment.id,
             paymentId: appointment.payment!.id
         },
-        success_url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment/success`,
-        cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard/my-appointments`,
+        success_url: `${process.env.FRONTEND_URL || 'https://sheba-lab-client.vercel.app'}/payment/success`,
+        cancel_url: `${process.env.FRONTEND_URL || 'https://sheba-lab-client.vercel.app'}/dashboard/my-appointments`,
     });
 
     return { paymentUrl: session.url };
